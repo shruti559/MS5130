@@ -16,10 +16,10 @@ When you click the **Render** button a document will be generated that includes 
 #Loading library
 library(dplyr)
 
-setwd("~/Downloads")
-data1 <- read.csv("/Users/nareshkumar/Downloads/Rstudio Datasets/climate_change_data.csv")
-data2 <- read.csv("/Users/nareshkumar/Downloads/Rstudio Datasets/df_arabica_clean.csv")
-data3 <- read.csv("/Users/nareshkumar/Downloads/Rstudio Datasets/coffeereviews.csv")
+setwd("dataset/")
+data1 <- read.csv("Depression.csv")
+data2 <- read.csv("Life expectancy.csv")
+data3 <- read.csv("Suicide Rate.csv")
 ```
 
 You can add options to executable code like this
