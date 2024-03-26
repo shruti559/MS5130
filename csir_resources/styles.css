@@ -1,0 +1,72 @@
+html {
+	scroll-behavior: smooth;
+}
+
+html, body, h1, h2, h3, p {
+	font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+h1 {
+	display: none;
+}
+
+h2, h3 {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+section {
+	margin-top: 7rem;
+}
+
+section:first-of-type {
+	margin-top: 2rem;
+}
+
+#critical-is-research-seminar-galway-15-november-2023 {
+	margin-top: 1rem;
+}
+
+#critical-is-research-seminar-galway-15-november-2023 h2 {
+	font-size: 1rem;
+	color: gray;
+	letter-spacing: 1pt;
+	font-weight: 200;
+	margin-top: 0rem;
+	padding: 0.5rem !important;
+}
+
+#TOC > ul > li > a {
+	font-weight: bold;
+}
+
+
+/* Styling references */
+
+.citation,
+.citation > a {
+	color: gray;
+	/* font-weight: 300; */
+}
+
+.citation > a,
+.tippy-box a {
+	border-bottom: 1px solid;
+}
+
+.citation > a:hover,
+.tippy-box a:hover {
+	background-color: rgba(211, 211, 211, 0.5);
+}
+
+.tippy-box {
+	box-shadow: 10px 10px 21px 0px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 10px 10px 21px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 10px 10px 21px 0px rgba(0,0,0,0.5);
+	padding: 1rem;
+	background-color: rgb(255, 251, 231) !important;
+}
+
+.tippy-box a {
+	color: black;
+}
