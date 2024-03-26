@@ -25,6 +25,18 @@ data3 <- read.csv("Suicide Rate.csv")
 You can add options to executable code like this
 
 ```{r}
+# Merge the datasets on the common column
+merged_data <- inner_join(data2, data3, by = "Country")
+
+# Write the merged dataset to a new CSV file
+write.csv(merged_data, "dataset/merged_data.csv", row.names = FALSE)
+
+head(merged_data)
+str(merged_data)
+```
+
+
+```{r}
 #| echo: false
 2 * 2
 ```

@@ -125,6 +125,49 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>You can add options to executable code like this</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the datasets on the common column</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(data2, data3, <span class="at">by =</span> <span class="st">"Country"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the merged dataset to a new CSV file</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(merged_data, <span class="st">"dataset/merged_data.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(merged_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Country Life.Expectancy..years....Men
+1         Afghanistan                          60.6
+2             Albania                          74.8
+3             Algeria                          73.3
+4             Andorra                          81.7
+5              Angola                          58.1
+6 Antigua and Barbuda                          74.4
+  Life.Expectancy..years....Women Happiness.Score
+1                            68.2           3.794
+2                            81.3           4.959
+3                            78.9           5.605
+4                            84.8           6.955
+5                            65.6           4.105
+6                            78.9           6.102
+  Fertility.Rate..births.per.woman. GDP.per.capita Suicide.rate
+1                               4.7          1,105         20.6
+2                               1.7          4,932         32.4
+3                               2.9          4,534         15.6
+4                               1.4         46,622         18.9
+5                               5.3          2,077         20.5
+6                               2.2         14,447         18.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(merged_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   132 obs. of  7 variables:
+ $ Country                          : chr  "Afghanistan" "Albania" "Algeria" "Andorra" ...
+ $ Life.Expectancy..years....Men    : num  60.6 74.8 73.3 81.7 58.1 74.4 74.7 72.6 80.5 81.2 ...
+ $ Life.Expectancy..years....Women  : num  68.2 81.3 78.9 84.8 65.6 78.9 80.4 79.4 84.3 84.2 ...
+ $ Happiness.Score                  : num  3.79 4.96 5.61 6.96 4.11 ...
+ $ Fertility.Rate..births.per.woman.: num  4.7 1.7 2.9 1.4 5.3 2.2 2.3 1.8 1.7 1.5 ...
+ $ GDP.per.capita                   : chr  "1,105" "4,932" "4,534" "46,622" ...
+ $ Suicide.rate                     : num  20.6 32.4 15.6 18.9 20.5 18.8 18.5 39.7 10.7 11.5 ...</code></pre>
+</div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
