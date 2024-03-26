@@ -1,5 +1,5 @@
 ---
-title: "Assignment3"
+title: "Data Analysis Project"
 format: 
   html:
     toc: true
@@ -7,12 +7,10 @@ format:
 editor: visual
 ---
 
-## Introduction
-
  
 
 ::: {style="font-size: 200%;"}
-Data Analysis Project: *Assignment3*
+## Introduction
 :::
 
  
@@ -21,9 +19,19 @@ Shruti Chauhan,\
 University of Galway, Ireland\
 `s.chauhan4@universityofgalway.ie`
 
+**Hobbies**
+
+-   Love Sports
+
+-   Sleeping
+
+-   Grocery Shopping
+
  
 
-## Data manipulation
+## Data Handling
+
+### loading
 
 Necessary Library for data loading is used. i.e. Dplyr.
 
@@ -38,6 +46,37 @@ data2 <- read.csv("Life expectancy.csv")
 data3 <- read.csv("Suicide Rate.csv")
 ```
 
+### Cleaning
+
+Datasets are inspected for any missing values, and if any are found, they need to be replaced.
+
+```{r}
+# Calculate the number of missing values
+missing_values <- sum(is.na(data1))
+
+# Print the number of missing values
+print(paste("Number of missing values in the dataset:", missing_values))
+
+```
+
+```{r}
+# Calculate the number of missing values
+missing_values <- sum(is.na(data2))
+
+# Print the number of missing values
+print(paste("Number of missing values in the dataset:", missing_values))
+```
+
+```{r}
+# Calculate the number of missing values
+missing_values <- sum(is.na(data3))
+
+# Print the number of missing values
+print(paste("Number of missing values in the dataset:", missing_values))
+```
+
+### Merging
+
 Datasets are merged on a common column and dataypes of the merged csv are displayed.
 
 ```{r}
@@ -50,4 +89,16 @@ write.csv(merged_data, "dataset/merged_data.csv", row.names = FALSE)
 head(merged_data)
 str(merged_data)
 ```
+
+::: {.callout-important collapse="true"}
+## Note
+
+Depression CSV file is a textual data from a survey. Hence, not merged with the other two files.
+:::
+
+## Data Analysis
+
+Quantitative and Qualitative analysis is performed on the datasets. 
+
+### Qualitative
 
