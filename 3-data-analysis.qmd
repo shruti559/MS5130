@@ -4,7 +4,8 @@ format:
   html:
     toc: true
     css: "cisr_resources/css/styles.css"
-editor: visual
+    editor: visual
+    embed-resources: true
 ---
 
  
@@ -100,5 +101,28 @@ Depression CSV file is a textual data from a survey. Hence, not merged with the 
 
 Quantitative and Qualitative analysis is performed on the datasets. 
 
-### Qualitative
+### Data Stream
+
+
+```{mermaid}
+ flowchart LR
+      A[Dataset 1] --> B["Men's Life Expectancy"]
+    A --> |women| C["Women's Life Expectancy"]
+    A --> D["Happiness Score"]
+    A --> E["Fertility Rate"]
+    A --> F[Country]
+    
+    G[Dataset 2] --> H["Suicide Rate"]
+    G --> J["GDP per capita"]
+    G --> L[Country]
+    
+    F --> L
+    L -->|Data Merge|M[Modified Dataset]
+    
+    N[Dataset 3] --> O[Title]
+    N--> P[Content]
+    N --> Q[Score]
+    M --> R[Suicide Prediction]
+    P --> R
+```
 
