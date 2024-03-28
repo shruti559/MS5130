@@ -89,6 +89,9 @@ write.csv(merged_data, "dataset/merged_data.csv", row.names = FALSE)
 
 head(merged_data)
 str(merged_data)
+
+merged_data$GDP.per.capita <- as.numeric(gsub(",", "", merged_data$GDP.per.capita))
+
 ```
 
 ::: {.callout-important collapse="true"}
@@ -102,7 +105,7 @@ Depression CSV file is a textual data from a survey. Hence, not merged with the 
 Quantitative and Qualitative analysis is performed on the datasets. 
 
 ### Data Stream
-
+As implied by its name, our presentation illustrates the progression of our datasets, depicting their interrelationships and informing about our ultimate analysis.
 
 ```{mermaid}
  flowchart LR
@@ -125,4 +128,42 @@ Quantitative and Qualitative analysis is performed on the datasets.
     M --> R[Suicide Prediction]
     P --> R
 ```
+
+### Quantitative Analysis
+
+```{r}
+library(ggplot2)
+library(plotly)
+
+# Perform linear regression
+model <- lm(Suicide.rate ~ Life.Expectancy..years....Men + Life.Expectancy..years....Women +
+              Happiness.Score + Fertility.Rate..births.per.woman. + GDP.per.capita, data = merged_data)
+
+# Summary of the regression model
+summary(model)
+
+# Create ggplot object
+p <- ggplot(merged_data, aes(x = GDP.per.capita, y = Suicide.rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Linear Regression: Suicide Rate Prediction",
+       x = "GDP per capita",
+       y = "Suicide Rate") +
+  theme_minimal()
+
+# Convert ggplot object to Plotly
+p_plotly <- ggplotly(p)
+
+# Display the interactive plot
+p_plotly
+```
+
+
+
+
+### Qualitative Analysis
+qualitative analysis involves examining textual data, such as survey responses, to uncover themes and sentiments related to depression. Text mining techniques extract insights from the data, while word cloud visualizations highlight common words or themes. This helps understand the experiences and perspectives of individuals dealing with depression in the dataset.
+
+
+
 
