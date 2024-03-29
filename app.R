@@ -34,3 +34,28 @@ ggplot(merged_data, aes(x = GDP.per.capita, y = Suicide.rate)) +
        x = "GDP per capita",
        y = "Suicide Rate") +
   theme_minimal()
+
+# Perform linear regression
+model <- lm(Suicide.rate ~ Life.Expectancy..years....Men + Life.Expectancy..years....Women +
+              Happiness.Score + Fertility.Rate..births.per.woman. + GDP.per.capita, data = merged_data)
+
+# Summary of the regression model
+summary(model)
+
+# Visualize the regression line along with the actual data points
+library(ggplot2)
+
+# Create ggplot object
+p <- ggplot(merged_data, aes(x = GDP.per.capita, y = Suicide.rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Linear Regression: Suicide Rate Prediction",
+       x = "GDP per capita",
+       y = "Suicide Rate") +
+  theme_minimal()
+
+# Convert ggplot object to Plotly
+p_plotly <- ggplotly(p)
+
+# Display the interactive plot
+p_plotly

@@ -7,7 +7,6 @@ format:
     editor: visual
     embed-resources: true
 ---
-
  
 
 ::: {style="font-size: 200%;"}
@@ -35,6 +34,11 @@ University of Galway, Ireland\
 ### loading
 
 Necessary Library for data loading is used. i.e. Dplyr.
+
+```{r}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+echo = FALSE
+```
 
 ```{r}
 #Loading library
@@ -102,9 +106,10 @@ Depression CSV file is a textual data from a survey. Hence, not merged with the 
 
 ## Data Analysis
 
-Quantitative and Qualitative analysis is performed on the datasets. 
+Quantitative and Qualitative analysis is performed on the datasets.
 
 ### Data Stream
+
 As implied by its name, our presentation illustrates the progression of our datasets, depicting their interrelationships and informing about our ultimate analysis.
 
 ```{mermaid}
@@ -158,12 +163,58 @@ p_plotly <- ggplotly(p)
 p_plotly
 ```
 
-
-
-
 ### Qualitative Analysis
-qualitative analysis involves examining textual data, such as survey responses, to uncover themes and sentiments related to depression. Text mining techniques extract insights from the data, while word cloud visualizations highlight common words or themes. This helps understand the experiences and perspectives of individuals dealing with depression in the dataset.
 
+Qualitative analysis involves examining textual data, such as survey responses, to uncover themes and sentiments related to depression. Text mining techniques extract insights from the data, while word cloud visualizations highlight common words or themes. This helps understand the experiences and perspectives of individuals dealing with depression in the dataset.
+
+```{r}
+#STEP 1: Retrieving the data and uploading the packages
+
+library(wordcloud)
+
+
+library(RColorBrewer)
+
+
+library(wordcloud2)
+
+
+library(tm)
+
+library(dplyr)
+
+df <-read.csv("/Users/nareshkumar/MS5130-3/MS5130/dataset/Depression.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+
+df <-head(df, n = 1000)
+
+
+text <- df$title
+
+docs <- Corpus(VectorSource(text))
+
+#STEP 2: Clean the text data
+
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+
+#STEP 3: Create a document-term-matrix
+
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+
+
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+#STEP 4: Generate the word cloud
+set.seed(1234) # for reproducibility 
+wordcloud(words = df$word, freq = df$freq, min.freq = 1,max.words=200, random.order=FALSE, rot.per=0.35, colors=brewer.pal(8, "Dark2"), wordLengths=c(0,Inf))
+
+```
 
 
 
