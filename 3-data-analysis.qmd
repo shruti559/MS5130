@@ -31,7 +31,7 @@ University of Galway, Ireland\
 
 ## Data Handling
 
-### loading
+### Loading
 
 Necessary Library for data loading is used. i.e. Dplyr.
 
@@ -134,8 +134,8 @@ As implied by its name, our presentation illustrates the progression of our data
     P --> R
 ```
 
-### Quantitative Analysis
-
+### Quantitative Analysis 1
+A regression model is constructed to predict the suicide rate through inference.
 ```{r}
 library(ggplot2)
 library(plotly)
@@ -161,6 +161,27 @@ p_plotly <- ggplotly(p)
 
 # Display the interactive plot
 p_plotly
+```
+
+### Quantitative Analysis 2
+
+```{r}
+library(plotly)
+library(dplyr)
+
+# Scatter plot to examine the relationship between fertility rate and life expectancy
+fertility_life_exp_scatter <- plot_ly(merged_data, x = ~Fertility.Rate..births.per.woman., y = ~Life.Expectancy..years....Women,
+                                      mode = "markers", type = "scatter", color = ~Country,
+                                      text = ~paste("Country: ", Country, "<br>Fertility Rate: ", Fertility.Rate..births.per.woman.,
+                                                    "<br>Life Expectancy (Female): ", Life.Expectancy..years....Women)) %>%
+  layout(title = "Fertility Rate vs. Life Expectancy (Female)",
+         xaxis = list(title = "Fertility Rate"),
+         yaxis = list(title = "Life Expectancy (Female)"))
+
+
+# Display the plots
+fertility_life_exp_scatter
+
 ```
 
 ### Qualitative Analysis
