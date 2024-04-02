@@ -3,10 +3,10 @@ title: "Data Analysis Project"
 format: 
   html:
     toc: true
-    css: "cisr_resources/css/styles.css"
     editor: visual
     embed-resources: true
 ---
+
  
 
 ::: {style="font-size: 200%;"}
@@ -27,7 +27,13 @@ University of Galway, Ireland\
 
 -   Grocery Shopping
 
+**What is my data about?**
+
  
+
+![](csir_resources/Images/men-and-suicide.png){fig-align="center" width="473"}
+
+![](csir_resources/Images/Life-Expectancy.png){fig-align="center" width="478"}
 
 ## Data Handling
 
@@ -115,7 +121,7 @@ As implied by its name, our presentation illustrates the progression of our data
 ```{mermaid}
  flowchart LR
       A[Dataset 1] --> B["Men's Life Expectancy"]
-    A --> |women| C["Women's Life Expectancy"]
+    A -->  C["Women's Life Expectancy"]
     A --> D["Happiness Score"]
     A --> E["Fertility Rate"]
     A --> F[Country]
@@ -135,14 +141,16 @@ As implied by its name, our presentation illustrates the progression of our data
 ```
 
 ### Quantitative Analysis 1
+
 A regression model is constructed to predict the suicide rate through inference.
+
 ```{r}
 library(ggplot2)
 library(plotly)
 
 # Perform linear regression
 model <- lm(Suicide.rate ~ Life.Expectancy..years....Men + Life.Expectancy..years....Women +
-              Happiness.Score + Fertility.Rate..births.per.woman. + GDP.per.capita, data = merged_data)
+              Fertility.Rate..births.per.woman. , data = merged_data)
 
 # Summary of the regression model
 summary(model)
@@ -162,6 +170,12 @@ p_plotly <- ggplotly(p)
 # Display the interactive plot
 p_plotly
 ```
+
+-   The summary of the linear regression model shows that Life Expectancy for men and women, along with Fertility Rate per woman, significantly influence Suicide rate. For every additional year of Life Expectancy for men, Suicide rate decreases by about 1.88 units, whereas for women, it increases by approximately 1.57 units.
+
+-   Conversely, each additional birth per woman is associated with a decrease of roughly 2.83 units in Suicide rate. The model explains around 30.59% of the variability in Suicide rate, indicating moderate explanatory power. With a highly significant F-statistic (p \< 0.001), the model effectively explains the variability in Suicide rate.
+
+-   Overall, these findings underscore the importance of considering Life Expectancy and Fertility Rate in understanding Suicide rates and informing potential interventions.
 
 ### Quantitative Analysis 2
 
@@ -184,6 +198,10 @@ fertility_life_exp_scatter
 
 ```
 
+-   High fertility rates may lead to rapid population growth, while low fertility rates may result in population decline or aging populations.
+
+-   Countries with higher fertility rates may have different cultural norms, access to family planning resources, and attitudes toward childbearing.
+
 ### Qualitative Analysis
 
 Qualitative analysis involves examining textual data, such as survey responses, to uncover themes and sentiments related to depression. Text mining techniques extract insights from the data, while word cloud visualizations highlight common words or themes. This helps understand the experiences and perspectives of individuals dealing with depression in the dataset.
@@ -192,50 +210,44 @@ Qualitative analysis involves examining textual data, such as survey responses, 
 #STEP 1: Retrieving the data and uploading the packages
 
 library(wordcloud)
-
-
 library(RColorBrewer)
-
-
-library(wordcloud2)
-
-
 library(tm)
-
 library(dplyr)
 
+# Additional stopwords
+additional_stopwords <- c("just", "like", "know", "anymore", "want", "feel", "m", "life", "feeling", "get", "can", "think")
+
 df <-read.csv("/Users/nareshkumar/MS5130-3/MS5130/dataset/Depression.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-
-df <-head(df, n = 1000)
-
+df <- head(df, n = 1000)
 
 text <- df$title
-
 docs <- Corpus(VectorSource(text))
 
 #STEP 2: Clean the text data
 
 docs <- docs %>%
   tm_map(removeNumbers) %>%
-  tm_map(removePunctuation) %>%
+  tm_map(content_transformer(tolower)) %>%
   tm_map(stripWhitespace)
-docs <- tm_map(docs, content_transformer(tolower))
-docs <- tm_map(docs, removeWords, stopwords("english"))
+docs <- tm_map(docs, removeWords, c(stopwords("english"), additional_stopwords))
+
 
 #STEP 3: Create a document-term-matrix
 
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 
-
-words <- sort(rowSums(matrix),decreasing=TRUE) 
-df <- data.frame(word = names(words),freq=words)
+words <- sort(rowSums(matrix), decreasing = TRUE) 
+df <- data.frame(word = names(words), freq = words)
 
 #STEP 4: Generate the word cloud
 set.seed(1234) # for reproducibility 
-wordcloud(words = df$word, freq = df$freq, min.freq = 1,max.words=200, random.order=FALSE, rot.per=0.35, colors=brewer.pal(8, "Dark2"), wordLengths=c(0,Inf))
+wordcloud(words = df$word, freq = df$freq, min.freq = 1, max.words = 200, random.order = FALSE, rot.per = 0.35, colors = brewer.pal(8, "Dark2"), wordLengths = c(0, Inf))
+
+
 
 ```
 
+-   The word cloud focuses specifically on the dataset related to depression, indicating a targeted analysis of text data associated with this mental health condition
 
-
+-   Depression stands as a prevalent mental health condition intricately linked with suicidal behavior. Those grappling with depression face an elevated susceptibility to experiencing thoughts of suicide, engaging in attempts, or completing the act. Consequently, delving into content related to depression offers valuable insights into the underlying factors influencing suicidal ideation. Such analysis serves as a crucial foundation for crafting tailored interventions aimed at thwarting suicide risks and fostering mental health and overall well-being.
