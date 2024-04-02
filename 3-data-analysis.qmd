@@ -1,5 +1,6 @@
 ---
 title: "Data Analysis Project"
+bibliography: "Dataset/references.bib"
 format: 
   html:
     toc: true
@@ -34,6 +35,10 @@ University of Galway, Ireland\
 ![](csir_resources/Images/men-and-suicide.png){fig-align="center" width="473"}
 
 ![](csir_resources/Images/Life-Expectancy.png){fig-align="center" width="478"}
+
+Mental health plays a critical role in our overall well-being, and its impact extends far beyond our emotional state. This exploration delves into the complex relationship between three seemingly disparate factors: suicide rate, life expectancy, and depression.
+
+By analyzing suicide rates alongside life expectancy and the prevalence of depression, we can gain valuable insights. We can explore whether areas with higher life expectancy also experience lower suicide rates, and how depression might act as a potential bridge between these two factors. Several studies consistently show that successful treatment of depression not only relieves depressive symptoms, but also decreases and makes suicidality vanish. [@rihmer2001can]
 
 ## Data Handling
 
@@ -201,6 +206,50 @@ fertility_life_exp_scatter
 -   High fertility rates may lead to rapid population growth, while low fertility rates may result in population decline or aging populations.
 
 -   Countries with higher fertility rates may have different cultural norms, access to family planning resources, and attitudes toward childbearing.
+
+### Quantitative Analysis 3
+
+A stacked barplot for happiness score vs fertility rate displays each country as a bar divided into segments. Each segment represents either the happiness score or fertility rate, stacked to show their combined values.
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Read the dataset
+data <- read.csv("/Users/nareshkumar/MS5130-3/MS5130/dataset/merged_data.csv")
+
+# Reshape data from wide to long format
+data_long <- tidyr::pivot_longer(data, 
+                                 cols = c(Fertility.Rate..births.per.woman., Happiness.Score),
+                                 names_to = "Variable", 
+                                 values_to = "Value")
+
+# Calculate the mean fertility rate and happiness score for each country
+data_summary <- data_long %>%
+  group_by(Country) %>%
+  summarize(Mean_Value = mean(Value)) %>%
+  arrange(desc(Mean_Value)) %>%
+  top_n(10)
+
+# Filter the data_long to include only the top 10 countries
+data_long_top10 <- data_long %>%
+  filter(Country %in% data_summary$Country)
+
+# Create stacked barplot
+ggplot(data_long_top10, aes(x = Country, y = Value, fill = Variable)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Top 10 Countries: Fertility Rate and Happiness Score",
+       x = "Country",
+       y = "Value") +
+  scale_fill_manual(values = c("Fertility.Rate..births.per.woman." = "red", "Happiness.Score" = "blue")) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+
+
 
 ### Qualitative Analysis
 
