@@ -209,7 +209,7 @@ fertility_life_exp_scatter
 
 ### Quantitative Analysis 3
 
-A stacked barplot for happiness score vs fertility rate displays each country as a bar divided into segments. Each segment represents either the happiness score or fertility rate, stacked to show their combined values.
+A stacked barplot for happiness score vs fertility rate displays top 10 countries as a bar divided into segments. Each segment represents either the happiness score or fertility rate, stacked to show their combined values.
 
 ```{r}
 # Load necessary libraries
@@ -247,9 +247,6 @@ ggplot(data_long_top10, aes(x = Country, y = Value, fill = Variable)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ```
-
-
-
 
 ### Qualitative Analysis
 
